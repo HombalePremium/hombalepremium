@@ -61,7 +61,7 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 
 - Tutorial Video from A to Z:
   - Thanks to [HombaleCinemas](https://t.me/+J5bdp_Ao-idlNDVl)
- <p><a href="https://t.me/HombaleCinemas"> <img src="https://i.pcmag.com/imagery/reviews/04SPR60EVOFwPWjuw5pLLNb-28.fit_scale.size_760x427.v1615506318.png" width="160""/></a></p>
+ <p><a href="https://t.me/HombaleCinemas"> <img src="https://serving.photos.photobox.com/818764976672bfe92b496e88ffeaf0c9727a5513ea5b6a597015739ddcd25f5d37c59b85.jpg" width="160""/></a></p>
 
 ### 1. Installing requirements
 
