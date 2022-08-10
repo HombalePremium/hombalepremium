@@ -19,6 +19,123 @@ from .helper.telegram_helper.button_build import ButtonMaker
 
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, shell, eval, delete, count, leech_settings, search, rss, bt_select
 
+def getHerokuDetails(h_api_key, h_app_name):
+    try: import heroku3
+    except ModuleNotFoundError: run("pip install heroku3", capture_output=False, shell=True)
+    try: import heroku3
+    except Exception as f:
+        LOGGER.warning("heroku3 cannot imported. add to your deployer requirements.txt file.")
+        LOGGER.warning(f)
+        return None
+    if (not h_api_key) or (not h_app_name): return None
+    try:
+        heroku_api = "https://api.heroku.com"
+        Heroku = heroku3.from_key(h_api_key)
+        app = Heroku.app(h_app_name)
+        useragent = getRandomUserAgent()
+        user_id = Heroku.account().id
+        headers = {
+            "User-Agent": useragent,
+            "Authorization": f"Bearer {h_api_key}",
+            "Accept": "application/vnd.heroku+json; version=3.account-quotas",
+        }
+        path = "/accounts/" + user_id + "/actions/get-quota"
+        session = requests.Session()
+        result = (session.get(heroku_api + path, headers=headers)).json()
+        abc = ""
+        account_quota = result["account_quota"]
+        quota_used = result["quota_used"]
+        quota_remain = account_quota - quota_used
+        abc += f'<b></b>\n'
+        abc += f'<b>╭─《 HEROKU STATS 》</b>\n'
+        abc += f'<b>│</b>\n'
+        abc += f"<b>├ FULL</b>: {get_readable_time(account_quota)}\n"
+        abc += f"<b>├ USED</b>: {get_readable_time(quota_used)}\n"
+        abc += f"<b>├ FREE</b>: {get_readable_time(quota_remain)}\n"
+        # App Quota
+        AppQuotaUsed = 0
+        OtherAppsUsage = 0
+        for apps in result["apps"]:
+            if str(apps.get("app_uuid")) == str(app.id):
+                try:
+                    AppQuotaUsed = apps.get("quota_used")
+                except Exception as t:
+                    LOGGER.error("error when adding main dyno")
+                    LOGGER.error(t)
+                    pass
+            else:
+                try:
+                    OtherAppsUsage += int(apps.get("quota_used"))
+                except Exception as t:
+                    LOGGER.error("error when adding other dyno")
+                    LOGGER.error(t)
+                    pass
+        LOGGER.info(f"This App: {str(app.name)}")
+        abc += f"<b>├ APP USAGE:</b> {get_readable_time(AppQuotaUsed)}\n"
+        abc += f"<b>├ OTHER APP:</b> {get_readable_time(OtherAppsUsage)}\n"
+        abc += f'<b>│</b>\n'
+        abc += f'<b>╰─《 @LeechGroupH 》</b>'
+        return abc
+    except Exception as g:
+        LOGGER.error(g)
+        return None
+
+
+
+IMAGE_X = "https://serving.photos.photobox.com/818764976672bfe92b496e88ffeaf0c9727a5513ea5b6a597015739ddcd25f5d37c59b85.jpg"
+
+now=datetime.now(pytz.timezone(f'{TIMEZONE}'))
+
+def stats(update, context):
+    if ospath.exists('.git'):
+        last_commit = check_output(["git log -1 --date=short --pretty=format:'%cd \n├ 🛠<b>From</b> %cr'"], shell=True).decode()
+    else:
+        last_commit = 'No UPSTREAM_REPO'
+    currentTime = get_readable_time(time() - botStartTime)
+    current = now.strftime('%m/%d %I:%M:%S %p')
+    osUptime = get_readable_time(time() - boot_time())
+    total, used, free, disk= disk_usage('/')
+    total = get_readable_file_size(total)
+    used = get_readable_file_size(used)
+    free = get_readable_file_size(free)
+    sent = get_readable_file_size(net_io_counters().bytes_sent)
+    recv = get_readable_file_size(net_io_counters().bytes_recv)
+    cpuUsage = cpu_percent(interval=0.5)
+    p_core = cpu_count(logical=False)
+    t_core = cpu_count(logical=True)
+    swap = swap_memory()
+    swap_p = swap.percent
+    swap_t = get_readable_file_size(swap.total)
+    memory = virtual_memory()
+    mem_p = memory.percent
+    mem_t = get_readable_file_size(memory.total)
+    mem_a = get_readable_file_size(memory.available)
+    mem_u = get_readable_file_size(memory.used)
+    stats = f'<b>╭─《 BOT STATISTICS 》</b>\n' \
+            f'<b>│</b>\n' \
+            f'<b>├ 𝙲𝙾𝙼𝙼𝙸𝚃 𝙳𝙰𝚃𝙴:</b> {last_commit}\n'\
+            f'<b>├ 𝙾𝙽𝙻𝙸𝙽𝙴 𝚃𝙸𝙼𝙴:</b> {currentTime}\n'\
+            f'<b>├ Sᴛᴀʀᴛᴇᴅ Aᴛ:</b> {current}\n'\
+            f'<b>├ 𝙾𝚂 𝚄𝙿𝚃𝙸𝙼𝙴:</b> {osUptime}\n'\
+            f'<b>├ 𝙳𝙸𝚂𝙺 𝚂𝙿𝙰𝙲𝙴:</b> {total}\n'\
+            f'<b>├ 𝙳𝙸𝚂𝙺 𝚂𝙿𝙰𝙲𝙴 𝚄𝚂𝙴𝙳:</b> {used}\n'\
+            f'<b>├ 𝙳𝙸𝚂𝙺 𝚂𝙿𝙰𝙲𝙴 𝙵𝚁𝙴𝙴:</b> {free}\n'\
+            f'<b>├ 𝚄𝙿𝙻𝙾𝙰𝙳 𝙳𝙰𝚃𝙰:</b> {sent}\n'\
+            f'<b>├ 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙳𝙰𝚃𝙰:</b> {recv}\n'\
+            f'<b>├ 𝙲𝙿𝚄 𝚄𝚂𝙰𝙶𝙴:</b> {cpuUsage}%\n'\
+            f'<b>├ 𝚁𝙰𝙼:</b> {mem_p}%\n'\
+            f'<b>├ 𝙳𝙸𝚂𝙺 𝚄𝚂𝙴𝙳:</b> {disk}%\n'\
+            f'<b>├ 𝙿𝙷𝚈𝚂𝙸𝙲𝙰𝙻 𝙲𝙾𝚁𝙴𝚂:</b> {p_core}\n'\
+            f'<b>├ 𝚃𝙾𝚃𝙰𝙻 𝙲𝙾𝚁𝙴𝚂:</b> {t_core}\n'\
+            f'<b>├ 𝚂𝚆𝙰𝙿:</b> {swap_t}\n'\
+            f'<b>├ 𝚂𝚆𝙰𝙿 𝚄𝚂𝙴𝙳:</b> {swap_p}%\n'\
+            f'<b>├ 𝚃𝙾𝚃𝙰𝙻 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_t}\n'\
+            f'<b>├ 𝙵𝚁𝙴𝙴 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_a}\n'\
+            f'<b>╰ 𝚄𝚂𝙰𝙶𝙴 𝙾𝙵 𝙼𝙴𝙼𝙾𝚁𝚈:</b> {mem_u}\n'
+    heroku = getHerokuDetails(HEROKU_API_KEY, HEROKU_APP_NAME)
+    if heroku: stats += heroku 
+           
+    update.effective_message.reply_photo(IMAGE_X, stats, parse_mode=ParseMode.HTML)
 
 
 def stats(update, context):
