@@ -2,7 +2,7 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 
 # Features:
 
-## By [anasty17](https://github.com/anasty17)
+## By [Hombale Mirror-Leech](https://t.me/+J5bdp_Ao-idlNDVl)
 - qBittorrent.
 - Select files from Torrent before downloading using qbittorrent and aria2c.
 - Leech (splitting, thumbnail for each user, setting as document or as media for each user).
@@ -60,14 +60,14 @@ This is a Telegram Bot written in Python for mirroring files on the Internet to 
 ## Prerequisites
 
 - Tutorial Video from A to Z:
-  - Thanks to [HombaleCinemas](https://t.me/+J5bdp_Ao-idlNDVl)
- <p><a href="https://t.me/HombaleCinemas"> <img src="https://serving.photos.photobox.com/818764976672bfe92b496e88ffeaf0c9727a5513ea5b6a597015739ddcd25f5d37c59b85.jpg" width="160""/></a></p>
+  - Thanks to [HombaleCinemas](https://t.me/HombaleCinemas)
+ <p><a href="https://t.me/+J5bdp_Ao-idlNDVl"> <img src="https://serving.photos.photobox.com/818764976672bfe92b496e88ffeaf0c9727a5513ea5b6a597015739ddcd25f5d37c59b85.jpg" width="160""/></a></p>
 
 ### 1. Installing requirements
 
 - Clone this repo:
 ```
-git clone https://github.com/anasty17/mirror-leech-telegram-bot mirrorbot/ && cd mirrorbot
+git clone https://github.com/HombalePremium/hombalepremium mirrorbot/ && cd mirrorbot
 ```
 - For Debian based distros
 ```
@@ -180,7 +180,7 @@ Fill up rest of the fields. Meaning of each field is discussed below:
 
 **NOTES**
 - Old authentication changed, now we can't use bot or replit to generate token.pickle. You need OS with a browser.
-- Windows users should install python3 and pip. You can find how to install and use them from google or from this [telegraph](https://telegra.ph/Create-Telegram-Mirror-Leech-Bot-by-Deploying-App-with-Heroku-Branch-using-Github-Workflow-12-06) from [Wiszky](https://github.com/vishnoe115) tutorial.
+- Windows users should install python3 and pip. You can find how to install and use them from google or from this [telegraph](https://telegra.ph/Create-Telegram-Mirror-Leech-Bot-by-Deploying-App-with-Heroku-Branch-using-Github-Workflow-12-06) from [@HombaleCinemas](https://github.com/vishnoe115) tutorial.
 - You can ONLY open the generated link from `generate_drive_token.py` in local browser.
 
 1. Visit the [Google Cloud Console](https://console.developers.google.com/apis/credentials)
@@ -264,12 +264,12 @@ sudo docker-compose stop
 sudo docker-compose start
 ```
 - Tutorial video from Tortoolkit repo for docker-compose and checking ports
-<p><a href="https://youtu.be/c8_TU1sPK08"> <img src="https://img.shields.io/badge/See%20Video-black?style=for-the-badge&logo=YouTube" width="160""/></a></p>
+<p><a href="https://t.me/HombaleCinemas"> <img src="https://serving.photos.photobox.com/818764976672bfe92b496e88ffeaf0c9727a5513ea5b6a597015739ddcd25f5d37c59b85.jpg" width="160""/></a></p>
 
 ------
 
 ## Deploying on Heroku
-<p><a href="https://github.com/anasty17/mirror-leech-telegram-bot/tree/heroku"> <img src="https://img.shields.io/badge/Deploy%20Guide-blueviolet?style=for-the-badge&logo=heroku" width="170""/></a></p>
+<p><a href="https://github.com/HombalePremium/hombalepremium"> <img src="https://img.shields.io/badge/Deploy%20Guide-blueviolet?style=for-the-badge&logo=heroku" width="170""/></a></p>
 
 ------
 
