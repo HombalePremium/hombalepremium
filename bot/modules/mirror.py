@@ -214,7 +214,9 @@ class MirrorListener:
             msg += f'\n<b>Total Files: </b>{folders}'
             if typ != 0:
                 msg += f'\n<b>Corrupted Files: </b>{typ}'
-            msg += f'\n<b>cc: </b>{self.tag}\n\n'
+            msg += f'\n\n<b>Hey </b>{self.tag} <b>Your Job is Done</b>'
+            msg += f'\n<b>#Leeched It Took : </b> {get_readable_time(time() - self.message.date.timestamp())}'
+            msg += f'\n\n<b>Thanks For using @HombaleCinemas Mirror-Leech</b>\n\n'
             if not files:
                 sendMessage(msg, self.bot, self.message)
             else:
