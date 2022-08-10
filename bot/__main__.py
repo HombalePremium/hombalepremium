@@ -222,6 +222,11 @@ def log(update, context):
     sendLogFile(context.bot, update.message)
 
 
+help_string = '''
+<b><a href='https://t.me/HombaleCinemas'>Powered by Hombale Mirror-Leech</a></b> - The Ultimate Telegram MIrror-Leech Bot to Upload Your File & Link in Google Drive & Telegram
+Choose a help category:
+'''
+
 help_string_telegraph = f'''<br>
 <b>/{BotCommands.HelpCommand}</b>: To get this message
 <br><br>
